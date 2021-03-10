@@ -1,28 +1,39 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
-</template>
-
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+
+import Home from '@/views/Home';
+import List from '@/views/List';
+
+const NotFound = { template: '<p>Page not found</p>' }
+
+const routes = {
+  '/': Home,
+  '/list': List,
+}
 
 export default {
   name: "App",
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      currentRoute: window.location.pathname
+    }
+  },
+  computed: {
+    ViewComponent () {
+
+      /*let routesSplit = this.currentRoute.split('/');
+
+      if (routesSplit.length > 2) {
+        routesSplit = routesSplit.slice(routesSplit.length,-1)
+      }*/
+
+      return routes[this.currentRoute] || NotFound
+    }
+  },
+  render(h) { return h(this.ViewComponent) }
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import './assets/style/normalize.css';
+@import './assets/style/main.scss';
 </style>

@@ -1,24 +1,3 @@
-# global66-frontend
+# Prueba de Frontend en Global 66
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Para el proyecto use Vue, Vuex para mostrar el store, considere usar Vue-router, pero me parecio que serían innecesario para las pocas páginas, así que decidí no incluirlo. Para los estilos opte por no usar un framework, pero si la libreria de normalize y sass para poder escribir más rápida, creo que a la larga se haría más mantenible. Para Iconos pase a juntarlos todos en un archivo svg.
