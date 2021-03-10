@@ -1,7 +1,7 @@
 <template>
-  <button class="fav">
-    <icon icon="start">
-    <icon v-if="fav" icon="start">
+  <button class="btn-fav">
+    <icon icon="start" :class="{ 'fav':fav }"></icon>
+    <!--icon v-if="fav" icon="start"></icon-->
   </button>
 </template>
 

@@ -12,7 +12,7 @@
             {{ pokemon.name }}
           </div>
           <div class="right">
-            <icon icon="start"></icon>
+            <poke-fav></poke-fav>
           </div>
         </div>
       </section>
@@ -22,11 +22,15 @@
 
 <script>
 import Throttle from '@/lib/helpers.js';
+import PokeFav from '@/components/PokeFav';
 
 const Offset = 200;
 
 export default {
   name: 'PokeList',
+  components: {
+    PokeFav,
+  },
   data() {
     return {
       page: 1,

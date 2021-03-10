@@ -236,3 +236,27 @@ html {
     }
   }
 }
+
+.btn-fav {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: none;
+  background-color: $grey-200;
+  cursor: pointer;
+  display: flex;
+
+  & > .icon {
+    margin: auto;
+    color: $grey-400;
+
+    &.fav {
+      color: $action;
+    }
+  }
+
+  &:active {
+    background-color: $grey-300;
+  }
+
+}
