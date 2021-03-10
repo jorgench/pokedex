@@ -1,0 +1,32 @@
+.view {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  background-color: $grey-100;
+
+  & >.content-center {
+    margin: auto;
+  }
+
+  & >.content-max {
+    flex-grow: 1;
+  }
+
+  & >.content-header {
+    position: sticky;
+    top: -1px;
+    padding-top: 1.875rem;
+    padding-bottom: 2.5rem;
+    background-color: $grey-100;
+  }
+
+  & >.content-footer {
+    background-color: $light;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 1.125rem 0;
+    box-shadow: 0px -5px 4px rgba(0, 0, 0, 0.05);
+  }
+}

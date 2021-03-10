@@ -7,6 +7,7 @@
           v-for="(pokemon, n) in pokemons"
           role="button"
           :key="n"
+          @click="$emit('selected', pokemon)"
         >
           <div class="content">
             {{ pokemon.name }}

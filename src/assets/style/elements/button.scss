@@ -1,0 +1,50 @@
+.btn-group {
+  display: flex;
+  & > * + * {
+    margin-inline-start: 1.25rem;
+  }
+
+  &.space {
+    justify-content: space-between;
+  }
+}
+
+.btn {
+  font-size: 1.125rem;
+  line-height: 1.2;
+  text-align: center;
+  padding: 0.6875rem 1.25rem;
+  font-weight: 700;
+  background-color: $primary;
+  color: $light;
+  border-radius: 3.75rem;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:focus, &:active {
+    outline: 1px solid $primary-dark;
+  }
+
+  &:active {
+    background-color: $primary-dark;
+  }
+
+  &.width-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > * + * {
+      margin-inline-start: 0.625rem;
+    }
+  }
+
+  &.expanded {
+    width: 100%;
+  }
+  
+  &.disable {
+    background-color: $grey-400;
+  }
+}

@@ -1,0 +1,23 @@
+.card {
+  background-color: $light;
+  border-radius: $radius;
+
+  & > .card_image {
+    height: 13.75rem;
+    background-image: url('~@/assets/pokefondo.png');
+    background-position: center;
+    border-radius: $radius $radius 0 0;
+
+    & > img {
+      display: block;
+    }
+  }
+
+  & > .card_content {
+    padding: 0 1.875rem;
+  }
+
+  & > .card_footer {
+    padding: 1.25rem 1.875rem;
+  }
+}

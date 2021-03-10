@@ -1,0 +1,38 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+
+  & > .modal_overlay {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    background-color: rgba($dark, 0.35);
+    box-sizing: border-box;
+    padding: 2rem;
+    display: flex;
+  }
+
+  .modal_boton {
+    position: absolute;
+    cursor: pointer;
+    color: $light;
+    background-color: transparent;
+    border: none;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+
+  .modal_container {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    max-width: 570px;
+  }
+
+}
