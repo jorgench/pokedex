@@ -123,10 +123,10 @@ html {
   background-color: $light;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
   border-radius: $radius;
-  padding: 0.875rem 0.9375rem;
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  padding-left: 0.875rem;
 
   & > * + * {
     margin-inline-start: 0.625rem;
@@ -143,6 +143,8 @@ html {
     line-height: 1.4;
     border: none;
     flex-grow: 1;
+    background-color: transparent;
+    padding: 0.875rem 0.9375rem 0.875rem 0;
     &:active, &:focus {
       outline: none;
     }
