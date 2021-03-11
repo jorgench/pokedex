@@ -2,25 +2,25 @@
   <section class="card poke-modal">
     <div class="card_image poke-container">
       <img
-        v-if="detail.sprites"
+        v-if="pokemon.item.detail"
         class="poke-image"
-        :src="detail.sprites.front_default"
-        :alt="detail.name"
+        :src="pokemon.item.detail.image"
+        :alt="pokemon.item.name"
       />
     </div>
     <div class="card_content">
-      <div class="inner-list">
+      <div class="inner-list" v-if="pokemon.item.detail">
         <div class="inner-list_item">
-          <strong>Name:</strong> {{ detail.name }}
+          <strong>Name:</strong> {{ pokemon.item.name }}
         </div>
         <div class="inner-list_item">
-          <strong>Weight:</strong> {{ detail.weight }}
+          <strong>Weight:</strong> {{ pokemon.item.detail.weight }}
         </div>
         <div class="inner-list_item">
-          <strong>Height:</strong> {{ detail.height }}
+          <strong>Height:</strong> {{ pokemon.item.detail.height }}
         </div>
         <div class="inner-list_item">
-          <strong>Types:</strong> {{ detail.weight }}
+          <strong>Types:</strong> {{ pokemon.item.detail.weight }}
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
         <button class="btn">
           Share to my friends
         </button>
-        <poke-fav></poke-fav>
+        <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
       </div>
     </div>
   </section>
@@ -51,13 +51,13 @@ export default {
   },
   data() {
     return {
-      detail: {},
+      pokemon: {},
     };
   },
   methods: {
     getDetail() {
       this.$store.dispatch('getDetail', this.id).then(r => {
-        this.detail = r;
+        this.pokemon = r;
       });
     },
   },

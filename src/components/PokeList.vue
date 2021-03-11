@@ -13,7 +13,7 @@
             {{ pokemon.item.name }}
           </div>
           <div class="right">
-            <poke-fav></poke-fav>
+            <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
           </div>
         </div>
       </section>
@@ -38,7 +38,7 @@ export default {
     },
     hasNext() {
       return this.$store.getters['hasNext'];
-    }
+    },
   },
   methods: {
     getData() {

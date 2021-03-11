@@ -9,18 +9,21 @@
 export default {
   name: 'PokeFav',
   props: {
-    id: {
+    idItem: {
       type: String,
       default: '',
+      required: true,
     },
   },
-  data() {
-    return {
-      fav: false,
-    };
+  computed: {
+    fav() {
+      return this.$store.state.checkedIds.indexOf(this.idItem) !== -1;
+    }
   },
   methods: {
-    addFavorite() {},
+    addFavorite() {
+      this.$store.commit('SET_CHECKED_ITEM', { id: this.idItem })
+    },
   },
 };
 </script>
