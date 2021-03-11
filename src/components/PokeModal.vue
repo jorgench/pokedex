@@ -20,7 +20,7 @@
           <strong>Height:</strong> {{ pokemon.item.detail.height }}
         </div>
         <div class="inner-list_item">
-          <strong>Types:</strong> {{ pokemon.item.detail.types }}
+          <strong>Types:</strong> {{ pokemon.item.detail.types.join(',') }}
         </div>
       </div>
     </div>
@@ -37,6 +37,7 @@
 
 <script>
 import PokeFav from '@/components/PokeFav';
+import CopyText from '@/lib/copyText.js';
 
 export default {
   name: 'PokeModal',
@@ -62,10 +63,20 @@ export default {
     },
     copy() {
       if (this.pokemon.item && this.pokemon.item.detail) {
+        let content = [
+          `name: ${this.pokemon.id}`,
+          `weight: ${this.pokemon.item.detail.weight}`,
+          `height: ${this.pokemon.item.detail.height}`,
+          `types: ${this.pokemon.item.detail.types}`,
+        ];
 
-        let content = [`name: ${this.pokemon.id}`, `Weight: ${this.pokemon.detail.weight}`, `Height: ${this.pokemon.detail.height}`,`Types ${}`],
+        const textToCopy = content.join(', ');
 
-        const textToCopy = content.join(',');
+        if (CopyText(textToCopy)) {
+          this.$toast.open('Se copio la información al portapapeles');
+        } else {
+          this.$toast.open('No se puede copiar al portapapeles');
+        }
       }
     },
   },

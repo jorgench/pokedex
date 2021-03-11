@@ -5,10 +5,14 @@ import store from './store';
 import Icon from '@/components/Icon';
 import PModal from '@/components/PModal';
 
+import Toast from '@/plugin/toast';
+
 Vue.config.productionTip = false;
 
 Vue.component(Icon.name, Icon);
 Vue.component(PModal.name, PModal);
+
+Vue.use(Toast);
 
 Vue.filter('capitalize', function(value) {
   if (!value) return '';

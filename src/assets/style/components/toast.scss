@@ -1,0 +1,34 @@
+.notice {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem;
+  z-index: 1000;
+  pointer-events: none;
+
+  &.is-bottom {
+    flex-direction: column-reverse;
+  }
+
+  & > .toast {
+    display: inline-flex;
+    align-self: center;
+    animation-duration: 0.2s;
+    margin: 0.5em 0;
+    text-align: center;
+    pointer-events: auto;
+    background: $dark;
+    color: $light;
+    padding: 0.5em 1em;
+    border-radius: 2rem;
+    box-shadow: 0 0 0.02em 0.05em rgba($grey-500, 0.2);
+
+    & > div {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
