@@ -8,6 +8,12 @@ Vue.use(Vuex);
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const FAV_KEY = 'fav';
 
+const publicObjet = (state, id) => ({
+  id,
+  item: state.pokemonsById[id],
+  isChecked: state.checkedIds.includes(id),
+});
+
 export default new Vuex.Store({
   state: {
     page: {
@@ -17,7 +23,9 @@ export default new Vuex.Store({
     },
     ids: [],
     pokemonsById: {},
-    checkedIds: sessionStorage.getItem(FAV_KEY) ? sessionStorage.getItem(FAV_KEY).split(','): [],
+    checkedIds: sessionStorage.getItem(FAV_KEY)
+      ? sessionStorage.getItem(FAV_KEY).split(',')
+      : [],
   },
   getters: {
     page(state) {
@@ -27,10 +35,13 @@ export default new Vuex.Store({
       return state.page.currentPage < state.page.maxPage;
     },
     extendedItems(state) {
-      return state.ids.map(id => ({
+      return state.ids.map(id => publicObjet(state, id));
+    },
+    favoriteItems(state) {
+      return state.checkedIds.map(id => ({
         id,
         item: state.pokemonsById[id],
-        isChecked: state.checkedIds.includes(id),
+        isChecked: true,
       }));
     },
   },
@@ -57,7 +68,7 @@ export default new Vuex.Store({
       sessionStorage.setItem(FAV_KEY, state.checkedIds);
     },
     SET_MAX(state, payload) {
-      state.page.maxPage = payload / state.page.perPage;
+      state.page.maxPage = Math.ceil(payload / state.page.perPage);
     },
     ADD_PAGE(state) {
       state.page.currentPage += 1;
@@ -84,11 +95,7 @@ export default new Vuex.Store({
     getDetail({ state, commit }, idItem) {
       return new Promise(res => {
         if (state.pokemonsById[idItem] && state.pokemonsById[idItem].detail) {
-          return res({
-            id: idItem,
-            item: state.pokemonsById[idItem],
-            isChecked: state.checkedIds.includes(idItem),
-          });
+          return res(publicObjet(state, idItem));
         }
 
         Api.get(baseUrl + `/${idItem}`).then(r => {
@@ -103,11 +110,7 @@ export default new Vuex.Store({
 
           commit('SET_DETAIL', { id: idItem, detail });
 
-          res({
-            id: idItem,
-            item: state.pokemonsById[idItem],
-            isChecked: state.checkedIds.includes(idItem),
-          });
+          res(publicObjet(state, idItem));
         });
       });
     },

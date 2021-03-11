@@ -2,16 +2,16 @@
   <section class="card poke-modal">
     <div class="card_image poke-container">
       <img
-        v-if="pokemon.item.detail"
+        v-if="pokemon.item && pokemon.item.detail"
         class="poke-image"
         :src="pokemon.item.detail.image"
         :alt="pokemon.item.name"
       />
     </div>
     <div class="card_content">
-      <div class="inner-list" v-if="pokemon.item.detail">
+      <div class="inner-list" v-if="pokemon.item && pokemon.item.detail">
         <div class="inner-list_item">
-          <strong>Name:</strong> {{ pokemon.item.name }}
+          <strong>Name:</strong> {{ pokemon.item.name | capitalize }}
         </div>
         <div class="inner-list_item">
           <strong>Weight:</strong> {{ pokemon.item.detail.weight }}

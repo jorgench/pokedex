@@ -10,7 +10,7 @@
           @click="$emit('selected', pokemon.id)"
         >
           <div class="content">
-            {{ pokemon.item.name }}
+            {{ pokemon.item ? pokemon.item.name : pokemon.id }}
           </div>
           <div class="right">
             <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
@@ -25,16 +25,24 @@
 import Throttle from '@/lib/throttle.js';
 import PokeFav from '@/components/PokeFav';
 
-const Offset = 200;
+const Offset = 300;
 
 export default {
   name: 'PokeList',
   components: {
     PokeFav,
   },
+  props: {
+    all: {
+      type: Boolean,
+      default: true,
+    },
+  },
   computed: {
     pokemons() {
-      return this.$store.getters['extendedItems'];
+      return this.all
+        ? this.$store.getters['extendedItems']
+        : this.$store.getters['favoriteItems'];
     },
     hasNext() {
       return this.$store.getters['hasNext'];
@@ -55,7 +63,7 @@ export default {
     },
     handleLoader() {
       if (this.isViewComplete()) {
-        if (this.hasNext) {
+        if (this.hasNext && this.all) {
           window.removeEventListener('scroll', this.trottleHandler);
           this.getData().then(() => {
             window.addEventListener('scroll', this.trottleHandler);
@@ -64,9 +72,12 @@ export default {
       }
     },
     initialLoop() {
+      this.prevHeight = document.body.offsetHeight;
       this.getData().then(() => {
         if (this.isViewComplete()) {
-          this.initialLoop();
+          if (this.prevHeight < document.body.offsetHeight) {
+            this.initialLoop();
+          }
         }
       });
     },

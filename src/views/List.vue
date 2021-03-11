@@ -7,7 +7,11 @@
     </div>
 
     <div class="content-max">
-      <poke-list v-if="true" @selected="openModal"></poke-list>
+      <poke-list
+        v-if="true"
+        :all="selected === 'All'"
+        @selected="openModal"
+      ></poke-list>
 
       <div v-else class="wrapper center">
         <h1 class="title-1">
