@@ -14,34 +14,37 @@ export default new Vuex.Store({
       currentPage: 1,
       maxPage: 5,
     },
-    pokemons: [],
-    selected: '',
+    ids: [],
+    pokemonsById: {},
+    checkedIds: [],
   },
   getters: {
     page(state) {
       return state.page.currentPage;
     },
-    allList(state) {
-      return state.pokemons;
-    },
     hasNext(state) {
       return state.page.currentPage < state.page.maxPage;
+    },
+    extendedItems(state) {
+      return state.ids.map(id => ({
+        id,
+        item: state.pokemonsById[id],
+        isChecked: state.checkedIds.includes(id),
+      }));
     },
   },
   mutations: {
     ADD_POKEMONS(state, payload) {
-      state.pokemons = state.pokemons.concat(
-        payload.map(i => Object.freeze(i)),
-      );
+      payload.forEach(item => {
+        state.ids.push(item.name);
+        state.pokemonsById[item.name] = Object.freeze(item);
+      });
     },
     SET_MAX(state, payload) {
       state.page.maxPage = payload / state.page.perPage;
     },
     ADD_PAGE(state) {
       state.page.currentPage += 1;
-    },
-    SET_SELECTED(state, payload) {
-      state.selected = payload['name'];
     },
   },
   actions: {
@@ -52,7 +55,6 @@ export default new Vuex.Store({
         }
 
         const offset = (state.page.currentPage - 1) * state.page.perPage;
-        console.log('Offset: ',offset);
         Api.get(baseUrl + `?limit=${state.page.perPage}&offset=${offset}`).then(
           data => {
             commit('ADD_PAGE');
@@ -63,9 +65,7 @@ export default new Vuex.Store({
         );
       });
     },
-    getDetail({ state }) {
-      const idItem = state.selected;
-
+    getDetail(_, idItem) {
       return new Promise(res => {
         Api.get(baseUrl + `/${idItem}`).then(r => {
           console.log(r);

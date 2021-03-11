@@ -43,6 +43,12 @@ export default {
   components: {
     PokeFav,
   },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       detail: {},
@@ -50,7 +56,7 @@ export default {
   },
   methods: {
     getDetail() {
-      this.$store.dispatch('getDetail').then(r => {
+      this.$store.dispatch('getDetail', this.id).then(r => {
         this.detail = r;
       });
     },

@@ -7,10 +7,10 @@
           v-for="(pokemon, n) in pokemons"
           role="button"
           :key="n"
-          @click="$emit('selected', pokemon)"
+          @click="$emit('selected', pokemon.id)"
         >
           <div class="content">
-            {{ pokemon.name }}
+            {{ pokemon.item.name }}
           </div>
           <div class="right">
             <poke-fav></poke-fav>
@@ -32,15 +32,9 @@ export default {
   components: {
     PokeFav,
   },
-  data() {
-    return {
-      page: 1,
-      lastPage: 5,
-    };
-  },
   computed: {
     pokemons() {
-      return this.$store.getters['allList'];
+      return this.$store.getters['extendedItems'];
     },
     hasNext() {
       return this.$store.getters['hasNext'];
@@ -48,22 +42,6 @@ export default {
   },
   methods: {
     getData() {
-      /*return new Promise(res => {
-        const limit = 20;
-        const offset = (this.page - 1) * limit;
-
-        fetch(
-          `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
-        )
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-
-            this.lastPage = data.count / limit;
-            this.pokemons = this.pokemons.concat(data.results);
-            return res();
-          });
-      });*/
       return this.$store.dispatch('addPage');
     },
     trottleHandler: Throttle(function() {
@@ -86,11 +64,8 @@ export default {
       }
     },
     initialLoop() {
-      //console.log(k);
-
       this.getData().then(() => {
         if (this.isViewComplete()) {
-          this.page += 1;
           this.initialLoop();
         }
       });

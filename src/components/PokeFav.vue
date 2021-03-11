@@ -1,17 +1,26 @@
 <template>
-  <button class="btn-fav">
-    <icon icon="start" :class="{ 'fav':fav }"></icon>
+  <button class="btn-fav" @click.stop="addFavorite">
+    <icon icon="start" :class="{ fav: fav }"></icon>
     <!--icon v-if="fav" icon="start"></icon-->
   </button>
 </template>
 
 <script>
 export default {
-  name: "PokeFav",
+  name: 'PokeFav',
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
-      fav: true
-    }
-  }
-}
+      fav: false,
+    };
+  },
+  methods: {
+    addFavorite() {},
+  },
+};
 </script>

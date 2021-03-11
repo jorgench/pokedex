@@ -7,16 +7,16 @@
     </div>
 
     <div class="content-max">
-      <poke-list @selected="openModal"></poke-list>
+      <poke-list v-if="true" @selected="openModal"></poke-list>
 
-      <!--div class="wrapper center">
+      <div v-else class="wrapper center">
         <h1 class="title-1">
           Uh-oh!
         </h1>
         <p>You look lost on your journey!</p>
 
         <button class="btn">Go back home</button>
-      </div-->
+      </div>
     </div>
 
     <div class="content-footer">
@@ -39,7 +39,7 @@
     </div>
 
     <p-modal :active.sync="seeModal">
-      <poke-modal></poke-modal>
+      <poke-modal :id="detailId"></poke-modal>
     </p-modal>
   </section>
 </template>
@@ -70,12 +70,13 @@ export default {
           icon: 'start',
         },
       ],
+      detailId: '',
     };
   },
   methods: {
     openModal(detail) {
       this.seeModal = true;
-      this.$store.commit('SET_SELECTED', detail);
+      this.detailId = detail;
     },
   },
 };
