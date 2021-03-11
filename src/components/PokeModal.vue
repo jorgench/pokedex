@@ -20,13 +20,13 @@
           <strong>Height:</strong> {{ pokemon.item.detail.height }}
         </div>
         <div class="inner-list_item">
-          <strong>Types:</strong> {{ pokemon.item.detail.weight }}
+          <strong>Types:</strong> {{ pokemon.item.detail.types }}
         </div>
       </div>
     </div>
     <div class="card_footer">
       <div class="btn-group space">
-        <button class="btn">
+        <button class="btn" @click="copy">
           Share to my friends
         </button>
         <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
@@ -59,6 +59,14 @@ export default {
       this.$store.dispatch('getDetail', this.id).then(r => {
         this.pokemon = r;
       });
+    },
+    copy() {
+      if (this.pokemon.item && this.pokemon.item.detail) {
+
+        let content = [`name: ${this.pokemon.id}`, `Weight: ${this.pokemon.detail.weight}`, `Height: ${this.pokemon.detail.height}`,`Types ${}`],
+
+        const textToCopy = content.join(',');
+      }
     },
   },
   mounted() {
