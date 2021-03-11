@@ -141,3 +141,22 @@ html {
 @import './components/pokeModal.scss';
 @import './components/toast.scss';
 @import './transition.scss';
+
+.welcome {
+  text-align: center;
+  & .welcome_image {
+    margin-bottom: 3.75rem;
+  }
+
+  & .welcome_title {
+    margin-top: 0;
+    margin-bottom: 1.875rem;
+  }
+
+  & .welcome_p {
+    margin-top: 0;
+    margin-bottom: 3.125rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+}

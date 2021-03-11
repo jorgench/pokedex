@@ -26,8 +26,10 @@
   border: none;
   cursor: pointer;
   text-decoration: none;
+  display: inline-block;
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     outline: 1px solid $primary-dark;
   }
 
@@ -47,7 +49,7 @@
   &.expanded {
     width: 100%;
   }
-  
+
   &.disable {
     background-color: $grey-400;
   }

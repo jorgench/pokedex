@@ -11,7 +11,7 @@
     <div class="card_content">
       <div class="inner-list" v-if="pokemon.item && pokemon.item.detail">
         <div class="inner-list_item">
-          <strong>Name:</strong> {{ pokemon.item.name | capitalize }}
+          <strong>Name:</strong> {{ pokemon.id | capitalize }}
         </div>
         <div class="inner-list_item">
           <strong>Weight:</strong> {{ pokemon.item.detail.weight }}
@@ -20,7 +20,7 @@
           <strong>Height:</strong> {{ pokemon.item.detail.height }}
         </div>
         <div class="inner-list_item">
-          <strong>Types:</strong> {{ pokemon.item.detail.types.join(',') }}
+          <strong>Types:</strong> {{ pokemon.item.detail.types.join(', ') }}
         </div>
       </div>
     </div>

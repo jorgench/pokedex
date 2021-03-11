@@ -10,7 +10,7 @@
           @click="$emit('selected', pokemon.id)"
         >
           <div class="content">
-            {{ pokemon.item ? pokemon.item.name : pokemon.id }}
+            {{ pokemon.id | capitalize }}
           </div>
           <div class="right">
             <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
