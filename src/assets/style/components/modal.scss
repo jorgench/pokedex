@@ -11,7 +11,7 @@
     width: 100%;
     background-color: rgba($dark, 0.35);
     box-sizing: border-box;
-    padding: 2rem;
+    padding: 2rem 0;
     display: flex;
   }
 
@@ -29,10 +29,15 @@
   }
 
   .modal_container {
-    width: 100%;
+    width: 84%;
     position: relative;
     margin: auto;
     max-width: 570px;
+    overflow-y: hidden;
+
+    @media (max-height: 34rem) {
+      height: 100%;
+    }
   }
 
 }

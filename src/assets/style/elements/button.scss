@@ -6,6 +6,10 @@
 
   &.space {
     justify-content: space-between;
+
+    & > * + * {
+      margin-inline-start: 1rem;
+    }
   }
 }
 

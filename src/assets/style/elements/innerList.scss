@@ -1,0 +1,11 @@
+.inner-list {
+  margin-top: 0.625rem;
+
+  & > &_item {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid $grey-300;
+  }
+
+}

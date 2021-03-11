@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Throttle from '@/lib/helpers.js';
+import Throttle from '@/lib/throttle.js';
 import PokeFav from '@/components/PokeFav';
 
 const Offset = 200;
@@ -36,12 +36,19 @@ export default {
     return {
       page: 1,
       lastPage: 5,
-      pokemons: [],
     };
+  },
+  computed: {
+    pokemons() {
+      return this.$store.getters['allList'];
+    },
+    hasNext() {
+      return this.$store.getters['hasNext'];
+    }
   },
   methods: {
     getData() {
-      return new Promise(res => {
+      /*return new Promise(res => {
         const limit = 20;
         const offset = (this.page - 1) * limit;
 
@@ -56,7 +63,8 @@ export default {
             this.pokemons = this.pokemons.concat(data.results);
             return res();
           });
-      });
+      });*/
+      return this.$store.dispatch('addPage');
     },
     trottleHandler: Throttle(function() {
       this.handleLoader();
@@ -69,8 +77,7 @@ export default {
     },
     handleLoader() {
       if (this.isViewComplete()) {
-        if (this.page < this.lastPage) {
-          this.page += 1;
+        if (this.hasNext) {
           window.removeEventListener('scroll', this.trottleHandler);
           this.getData().then(() => {
             window.addEventListener('scroll', this.trottleHandler);

@@ -7,7 +7,7 @@
     </div>
 
     <div class="content-max">
-      <poke-list @selected="seeModal = true"></poke-list>
+      <poke-list @selected="openModal"></poke-list>
 
       <!--div class="wrapper center">
         <h1 class="title-1">
@@ -71,6 +71,12 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    openModal(detail) {
+      this.seeModal = true;
+      this.$store.commit('SET_SELECTED', detail);
+    },
   },
 };
 </script>
