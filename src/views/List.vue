@@ -2,45 +2,39 @@
   <section class="view flow">
     <div class="content-header">
       <div class="wrapper">
-        <poke-search placeholder="Search"></poke-search>
+        <poke-search placeholder="Search" v-model="toSearch" @input="search"></poke-search>
       </div>
     </div>
 
     <div class="content-max">
       <poke-list
-        v-if="true"
-        :all="selected === 'All'"
+        :pokemons="pokemons"
+        :loading="loading"
+        @goHome="toSearch = ''; selected = 'All'"
         @selected="openModal"
       ></poke-list>
-
-      <div v-else class="wrapper center">
-        <h1 class="title-1">
-          Uh-oh!
-        </h1>
-        <p>You look lost on your journey!</p>
-
-        <button class="btn">Go back home</button>
-      </div>
     </div>
 
-    <div class="content-footer">
-      <div class="wrapper">
-        <div class="btn-group">
-          <button
-            v-for="(option, k) in options"
-            :key="k"
-            :class="[
-              'btn width-icon expanded',
-              { disable: selected !== option.label },
-            ]"
-            @click="selected = option.label"
-          >
-            <icon :icon="option.icon"></icon>
-            <span>{{ option.label }}</span>
-          </button>
+    <transition name="inUp">
+      <div class="content-footer" v-show="!toSearch">
+        <div class="wrapper">
+          <div class="btn-group">
+            <button
+              v-for="(option, k) in options"
+              :key="k"
+              :class="[
+                'btn width-icon expanded',
+                { disable: selected !== option.label },
+              ]"
+              @click="selected = option.label"
+            >
+              <icon :icon="option.icon"></icon>
+              <span>{{ option.label }}</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <p-modal :active.sync="seeModal">
       <poke-modal :id="detailId"></poke-modal>
@@ -53,6 +47,10 @@ import PokeSearch from '@/components/PokeSearch';
 import PokeList from '@/components/PokeList';
 import PokeModal from '@/components/PokeModal';
 
+import Throttle from '@/lib/throttle.js';
+
+const Offset = 200;
+
 export default {
   name: 'List',
   components: {
@@ -63,6 +61,7 @@ export default {
   data() {
     return {
       seeModal: false,
+      toSearch: '',
       selected: 'All',
       options: [
         {
@@ -75,13 +74,93 @@ export default {
         },
       ],
       detailId: '',
+      loading: true,
+      pokemonSearch: [],
     };
+  },
+  computed: {
+    hasNext() {
+      return this.$store.getters['hasNext'];
+    },
+    isAll() {
+      return this.selected == 'All';
+    },
+    callMore() {
+      return (
+        this.$store.getters['hasNext'] &&
+        this.selected == 'All' &&
+        this.toSearch != ''
+      );
+    },
+    pokemonsStore() {
+      return this.isAll
+        ? this.$store.getters['extendedItems']
+        : this.$store.getters['favoriteItems'];
+    },
+    pokemons() {
+      return this.toSearch == '' ? this.pokemonsStore : this.pokemonSearch;
+    },
   },
   methods: {
     openModal(detail) {
       this.seeModal = true;
       this.detailId = detail;
     },
+    search: Throttle(function() {
+      this.searchPokemons();
+    }, 1000),
+    searchPokemons() {
+      this.$store.dispatch('search', this.toSearch).then(r => {
+        this.pokemonSearch = r;
+      });
+    },
+    /* metodos del scroll */
+    getData() {
+      return this.$store.dispatch('addPage');
+    },
+    trottleHandler: Throttle(function() {
+      this.handleLoader();
+    }, 1000),
+    isViewComplete() {
+      return (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - Offset
+      );
+    },
+    handleLoader() {
+      if (this.isViewComplete()) {
+        if (this.callMore) {
+          window.removeEventListener('scroll', this.trottleHandler);
+          this.getData().then(() => {
+            window.addEventListener('scroll', this.trottleHandler);
+          });
+        }
+      }
+    },
+    initialLoop() {
+      this.loading = true;
+      this.prevHeight = document.body.offsetHeight;
+      this.getData().then(() => {
+        if (this.isViewComplete()) {
+          if (this.prevHeight < document.body.offsetHeight) {
+            this.initialLoop();
+          } else {
+            this.loading = false;
+          }
+        } else {
+          this.loading = false;
+        }
+      });
+    },
+  },
+  created() {
+    this.initialLoop();
+  },
+  mounted() {
+    window.addEventListener('scroll', this.trottleHandler);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.trottleHandler);
   },
 };
 </script>

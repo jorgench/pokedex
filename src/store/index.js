@@ -49,7 +49,9 @@ export default new Vuex.Store({
     ADD_POKEMONS(state, payload) {
       payload.forEach(item => {
         state.ids.push(item.name);
-        state.pokemonsById[item.name] = Object.freeze(item);
+        if (!state.pokemonsById[item.name]) {
+          state.pokemonsById[item.name] = Object.freeze(item);
+        }
       });
     },
     SET_DETAIL(state, { id, detail }) {
@@ -93,25 +95,54 @@ export default new Vuex.Store({
       });
     },
     getDetail({ state, commit }, idItem) {
-      return new Promise(res => {
+      return new Promise((res, rej) => {
         if (state.pokemonsById[idItem] && state.pokemonsById[idItem].detail) {
           return res(publicObjet(state, idItem));
         }
 
-        Api.get(baseUrl + `/${idItem}`).then(r => {
-          const detail = {
-            weight: r.weight,
-            height: r.height,
-            image: r.sprites['front_default'],
-            types: r.types.map(type => {
-              return type.type.name;
-            }),
-          };
+        Api.get(baseUrl + `/${idItem}`)
+          .then(r => {
+            const detail = {
+              weight: r.weight,
+              height: r.height,
+              image: r.sprites['front_default'],
+              types: r.types.map(type => {
+                return type.type.name;
+              }),
+            };
 
-          commit('SET_DETAIL', { id: idItem, detail });
+            commit('SET_DETAIL', { id: idItem, detail });
 
-          res(publicObjet(state, idItem));
+            res(publicObjet(state, idItem));
+          })
+          .catch(() => {
+            rej();
+          });
+      });
+    },
+    search({ state, dispatch }, toSeach = '') {
+      toSeach = toSeach.toLowerCase();
+
+      return new Promise(res => {
+        const tmp = state.ids.filter(a => {
+          return a.search(toSeach) >= 0;
         });
+
+        if (tmp.length > 0) {
+          res(
+            tmp.map(t => {
+              return publicObjet(state, t);
+            }),
+          );
+        } else {
+          dispatch('getDetail', toSeach)
+            .then(r => {
+              return res([r]);
+            })
+            .catch(() => {
+              res([]);
+            });
+        }
       });
     },
   },

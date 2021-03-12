@@ -28,6 +28,7 @@
   animation-name: fadeOut;
 }
 
+/*-- transición fade --*/
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.5s;
@@ -38,4 +39,18 @@
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+
+/*-- transición fade --*/
+
+.inUp-enter-active,
+.inUp-leave-active {
+  transition-duration: 0.5s;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.25, 0.5, 0.5, 1);
+}
+
+.inUp-enter,
+.inUp-leave-active {
+  transform: translateY(100%);
 }

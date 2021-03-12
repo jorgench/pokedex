@@ -11,24 +11,26 @@
     <div class="card_content">
       <div class="inner-list" v-if="pokemon.item && pokemon.item.detail">
         <div class="inner-list_item">
-          <strong>Name:</strong> {{ pokemon.id | capitalize }}
+          <strong>Name:</strong>
+          {{ pokemon.id | capitalize }}
         </div>
         <div class="inner-list_item">
-          <strong>Weight:</strong> {{ pokemon.item.detail.weight }}
+          <strong>Weight:</strong>
+          {{ pokemon.item.detail.weight }}
         </div>
         <div class="inner-list_item">
-          <strong>Height:</strong> {{ pokemon.item.detail.height }}
+          <strong>Height:</strong>
+          {{ pokemon.item.detail.height }}
         </div>
         <div class="inner-list_item">
-          <strong>Types:</strong> {{ pokemon.item.detail.types.join(', ') }}
+          <strong>Types:</strong>
+          {{ pokemon.item.detail.types.join(', ') }}
         </div>
       </div>
     </div>
     <div class="card_footer">
       <div class="btn-group space">
-        <button class="btn" @click="copy">
-          Share to my friends
-        </button>
+        <button class="btn" @click="copy">Share to my friends</button>
         <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
       </div>
     </div>
@@ -57,9 +59,14 @@ export default {
   },
   methods: {
     getDetail() {
-      this.$store.dispatch('getDetail', this.id).then(r => {
-        this.pokemon = r;
-      });
+      this.$store
+        .dispatch('getDetail', this.id)
+        .then(r => {
+          this.pokemon = r;
+        })
+        .catch(() => {
+          this.pokemon = {};
+        });
     },
     copy() {
       if (this.pokemon.item && this.pokemon.item.detail) {

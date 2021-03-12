@@ -8,12 +8,16 @@ import List from '@/views/List';
 const NotFound = { template: '<p>Page not found</p>' };
 
 const routes = {
-  '/': Home,
-  '/list': List,
+  '/': 'home',
+  '/list': 'list',
 };
 
 export default {
   name: 'App',
+  components: {
+    Home,
+    List,
+  },
   data() {
     return {
       currentRoute: window.location.pathname,

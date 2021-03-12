@@ -1,7 +1,7 @@
 <template>
   <div class="poke-list">
     <div class="wrapper">
-      <section class="list">
+      <section class="list" v-if="pokemons.length > 0">
         <div
           class="item-list"
           v-for="(pokemon, n) in pokemons"
@@ -9,14 +9,20 @@
           :key="n"
           @click="$emit('selected', pokemon.id)"
         >
-          <div class="content">
-            {{ pokemon.id | capitalize }}
-          </div>
+          <div class="content">{{ pokemon.id | capitalize }}</div>
           <div class="right">
             <poke-fav :idItem="pokemon.id" :fav="pokemon.isChecked"></poke-fav>
           </div>
         </div>
       </section>
+      <div class="poke-list_empty center" v-else>
+        <h1 class="title-1">Uh-oh!</h1>
+        <p>You look lost on your journey!</p>
+
+        <div class="actions">
+          <button class="btn" @click="$emit('goHome')">Go back home</button>
+        </div>
+      </div>
     </div>
     <transition name="fade">
       <div class="loading-container" v-if="loading">
@@ -27,10 +33,7 @@
 </template>
 
 <script>
-import Throttle from '@/lib/throttle.js';
 import PokeFav from '@/components/PokeFav';
-
-const Offset = 300;
 
 export default {
   name: 'PokeList',
@@ -42,64 +45,16 @@ export default {
       type: Boolean,
       default: true,
     },
-  },
-  data() {
-    return {
-      loading: false,
-    };
-  },
-  computed: {
-    pokemons() {
-      return this.all
-        ? this.$store.getters['extendedItems']
-        : this.$store.getters['favoriteItems'];
+    loading: {
+      type: Boolean,
+      default: false,
     },
-    hasNext() {
-      return this.$store.getters['hasNext'];
+    pokemons: {
+      type: Array,
+      default() {
+        return [];
+      },
     },
-  },
-  methods: {
-    getData() {
-      return this.$store.dispatch('addPage');
-    },
-    trottleHandler: Throttle(function() {
-      this.handleLoader();
-    }, 1000),
-    isViewComplete() {
-      return (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - Offset
-      );
-    },
-    handleLoader() {
-      if (this.isViewComplete()) {
-        if (this.hasNext && this.all) {
-          window.removeEventListener('scroll', this.trottleHandler);
-          this.getData().then(() => {
-            window.addEventListener('scroll', this.trottleHandler);
-          });
-        }
-      }
-    },
-    initialLoop() {
-      this.prevHeight = document.body.offsetHeight;
-      this.getData().then(() => {
-        if (this.isViewComplete()) {
-          if (this.prevHeight < document.body.offsetHeight) {
-            this.initialLoop();
-          }
-        }
-      });
-    },
-  },
-  created() {
-    this.initialLoop();
-  },
-  mounted() {
-    window.addEventListener('scroll', this.trottleHandler);
-  },
-  destroyed() {
-    window.removeEventListener('scroll', this.trottleHandler);
   },
 };
 </script>
