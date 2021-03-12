@@ -79,6 +79,9 @@ html {
   & > .icon {
     margin: auto;
     color: $grey-400;
+    transition: transform 0.25s cubic-bezier(0.54, 0.42, 0.52, 1.35),
+      color 0.15s ease-in-out;
+    transform: scale(1);
 
     &.fav {
       color: $action;
@@ -87,6 +90,9 @@ html {
 
   &:active {
     background-color: $grey-300;
+    & > .icon {
+      transform: scale(0.8);
+    }
   }
 }
 

@@ -5,23 +5,24 @@
   min-height: calc(var(--vh, 1vh) * 100);
   background-color: $grey-100;
 
-  & >.content-center {
+  & > .content-center {
     margin: auto;
   }
 
-  & >.content-max {
+  & > .content-max {
     flex-grow: 1;
   }
 
-  & >.content-header {
+  & > .content-header {
     position: sticky;
     top: -1px;
     padding-top: 1.875rem;
     padding-bottom: 2.5rem;
     background-color: $grey-100;
+    z-index: 1;
   }
 
-  & >.content-footer {
+  & > .content-footer {
     background-color: $light;
     position: fixed;
     bottom: 0;

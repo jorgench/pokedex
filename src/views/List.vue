@@ -86,11 +86,9 @@ export default {
       return this.selected == 'All';
     },
     callMore() {
-      return (
-        this.$store.getters['hasNext'] &&
-        this.selected == 'All' &&
-        this.toSearch != ''
-      );
+      return this.toSearch
+        ? !this.toSearch
+        : this.$store.getters['hasNext'] && this.selected == 'All';
     },
     pokemonsStore() {
       return this.isAll
