@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Toast from './PToast';
+import Toast from './Toast';
 
 const ToastProgramatic = {
   open(params) {

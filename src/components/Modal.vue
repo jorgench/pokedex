@@ -1,12 +1,6 @@
 <template>
   <transition name="fade" @enter="setPreventElement">
-    <div
-      class="modal"
-      ref="modal"
-      aria-hidden="false"
-      v-if="isActive"
-      @click="closeModalOutsite"
-    >
+    <div class="modal" ref="modal" aria-hidden="false" v-if="isActive" @click="closeModalOutsite">
       <div class="modal_overlay" tabindex="-1" data-micromodal-close>
         <div class="modal_container" :class="size">
           <button class="modal_boton" @click.stop.prevent="closeModal">
@@ -22,12 +16,7 @@
             aria-modal="true"
             aria-labelledby="modal-title"
           ></component>
-          <slot
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-title"
-            v-else
-          ></slot>
+          <slot role="dialog" aria-modal="true" aria-labelledby="modal-title" v-else></slot>
         </div>
       </div>
     </div>
@@ -44,7 +33,7 @@ function removeElement(el) {
 }
 
 export default {
-  name: 'PModal',
+  name: 'Modal',
   props: {
     programatic: {
       type: Boolean,

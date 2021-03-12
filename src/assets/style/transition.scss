@@ -11,10 +11,23 @@
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .fadeInUp {
   animation-name: fadeInUp;
   animation-timing-function: ease-in-out;
   animation-duration: 0.5s;
+}
+
+.fadeOut {
+  animation-name: fadeOut;
 }
 
 /*-- transición fade --*/

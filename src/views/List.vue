@@ -36,9 +36,9 @@
       </div>
     </transition>
 
-    <p-modal :active.sync="seeModal">
+    <modal :active.sync="seeModal">
       <poke-modal :id="detailId"></poke-modal>
-    </p-modal>
+    </modal>
   </section>
 </template>
 

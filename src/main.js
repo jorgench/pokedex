@@ -3,14 +3,14 @@ import App from './App.vue';
 import store from './store';
 
 import Icon from '@/components/Icon';
-import PModal from '@/components/PModal';
+import Modal from '@/components/Modal';
 
 import Toast from '@/plugin/toast';
 
 Vue.config.productionTip = false;
 
 Vue.component(Icon.name, Icon);
-Vue.component(PModal.name, PModal);
+Vue.component(Modal.name, Modal);
 
 Vue.use(Toast);
 

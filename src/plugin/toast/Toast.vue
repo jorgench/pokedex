@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'PToast',
+  name: 'Toast',
   props: {
     message: String,
     duration: {
