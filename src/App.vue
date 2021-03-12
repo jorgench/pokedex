@@ -1,11 +1,11 @@
 <template>
-  <component :is="ViewComponent"></component>
+  <transition name="fade" mode="out-in">
+    <component :is="ViewComponent"></component>
+  </transition>
 </template>
 <script>
 import Home from '@/views/Home';
 import List from '@/views/List';
-
-const NotFound = { template: '<p>Page not found</p>' };
 
 const routes = {
   '/': 'home',
@@ -31,14 +31,13 @@ export default {
         routesSplit = routesSplit.slice(routesSplit.length,-1)
       }*/
 
-      return routes[this.currentRoute] || NotFound;
+      return routes[this.currentRoute] || 'NotFound';
     },
   },
   mounted() {
     window.history.replaceState({}, null, '');
     window.onpopstate = () => {
-      console.log('0');
-      this.currentRoute = history.state;
+      this.currentRoute = window.location.pathname;
     };
   },
 };

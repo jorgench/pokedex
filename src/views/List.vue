@@ -15,7 +15,7 @@
       ></poke-list>
     </div>
 
-    <transition name="inUp">
+    <transition name="inUp" appear>
       <div class="content-footer" v-show="!toSearch">
         <div class="wrapper">
           <div class="btn-group">

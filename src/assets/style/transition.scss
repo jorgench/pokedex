@@ -1,10 +1,11 @@
 @keyframes fadeInUp {
-  from {
+  0%,
+  25% {
     opacity: 0;
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 20%, 0);
   }
 
-  to {
+  100% {
     opacity: 1;
     transform: none;
   }
@@ -12,20 +13,8 @@
 
 .fadeInUp {
   animation-name: fadeInUp;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-.fadeOut {
-  animation-name: fadeOut;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.5s;
 }
 
 /*-- transición fade --*/

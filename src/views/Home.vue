@@ -1,6 +1,6 @@
 <template>
   <section class="view">
-    <div class="welcome content-center wrapper">
+    <div class="welcome content-center wrapper fadeInUp">
       <img class="welcome_image center-image" src="@/assets/pikachu.png" />
 
       <h2 class="welcome_title title-2">Welcome to Pokédex</h2>
@@ -22,7 +22,10 @@ export default {
   components: {},
   methods: {
     openList() {
-      history.pushState({ foo: 'bar' }, 'List of pokemons', 'list');
+      const state = {};
+      history.pushState(state, 'List of pokemons', 'list');
+      const popStateEvent = new PopStateEvent('popstate', { state: state });
+      dispatchEvent(popStateEvent);
     },
   },
 };
