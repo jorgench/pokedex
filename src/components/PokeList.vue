@@ -18,6 +18,11 @@
         </div>
       </section>
     </div>
+    <transition name="fade">
+      <div class="loading-container" v-if="loading">
+        <div class="pokebol"></div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -37,6 +42,11 @@ export default {
       type: Boolean,
       default: true,
     },
+  },
+  data() {
+    return {
+      loading: false,
+    };
   },
   computed: {
     pokemons() {

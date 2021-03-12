@@ -52,5 +52,9 @@
 
   &.disable {
     background-color: $grey-400;
+
+    &:active {
+      background-color: $grey-500;
+    }
   }
 }

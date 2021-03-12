@@ -1,35 +1,42 @@
+<template>
+  <component :is="ViewComponent"></component>
+</template>
 <script>
-
 import Home from '@/views/Home';
 import List from '@/views/List';
 
-const NotFound = { template: '<p>Page not found</p>' }
+const NotFound = { template: '<p>Page not found</p>' };
 
 const routes = {
   '/': Home,
   '/list': List,
-}
+};
 
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
-      currentRoute: window.location.pathname
-    }
+      currentRoute: window.location.pathname,
+    };
   },
   computed: {
-    ViewComponent () {
-
+    ViewComponent() {
       /*let routesSplit = this.currentRoute.split('/');
 
       if (routesSplit.length > 2) {
         routesSplit = routesSplit.slice(routesSplit.length,-1)
       }*/
 
-      return routes[this.currentRoute] || NotFound
-    }
+      return routes[this.currentRoute] || NotFound;
+    },
   },
-  render(h) { return h(this.ViewComponent) }
+  mounted() {
+    window.history.replaceState({}, null, '');
+    window.onpopstate = () => {
+      console.log('0');
+      this.currentRoute = history.state;
+    };
+  },
 };
 </script>
 

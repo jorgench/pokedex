@@ -1,0 +1,11 @@
+.poke-list {
+  & .list {
+    padding-bottom: 5rem;
+    &::after {
+      content: '';
+      display: block;
+      height: 5rem;
+      width: 100%;
+    }
+  }
+}

@@ -10,7 +10,7 @@
         to Trainers in the Pokémon world.
       </p>
       <div class="welcome_action">
-        <a class="btn" href="/list">Get started</a>
+        <button class="btn" @click="openList">Get started</button>
       </div>
     </div>
   </section>
@@ -21,7 +21,9 @@ export default {
   name: 'Home',
   components: {},
   methods: {
-    openList() {},
+    openList() {
+      history.pushState({ foo: 'bar' }, 'List of pokemons', 'list');
+    },
   },
 };
 </script>
